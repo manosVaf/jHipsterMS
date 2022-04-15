@@ -1,0 +1,11 @@
+id;name;fetch_interval;source
+1;Crawler1;-1;http://www.test1.com
+2;Crawler2;100;https://www.test2.com
+3;Crawler3;0;ftp://nes1.gr
+4;Crawler4;10;http://www.test1.com
+5;Crawler5;0;http://www.test1.com
+6;Crawler6;100;smtp://www.gr.gr
+7;Crawler7;1000;http://www.youtap.org
+8;Crawler8;500;https://www.test2.com
+9;Crawler9;-1;ftp://nes1.gr
+10;Crawler10;-1;https://www.test2.com
