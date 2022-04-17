@@ -34,7 +34,7 @@ public class CrawlerResource {
 
     private final Logger log = LoggerFactory.getLogger(CrawlerResource.class);
 
-    private static final String ENTITY_NAME = "crawlerCrawler";
+    private static final String ENTITY_NAME = "crawler";
 
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
