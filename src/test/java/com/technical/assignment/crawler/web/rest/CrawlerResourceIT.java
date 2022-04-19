@@ -33,8 +33,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @WithMockUser
 class CrawlerResourceIT {
-    private final static String FILTER = "\"{\\\"type\\\":\\\"boolean\\\",\\\"domain\\\":true,\\\"host\\\":false,\\\"schema\\\":false}\"";
-    private final static String UPDATED_FILTER = "\"{\\\"type\\\":\\\"integer\\\",\\\"inclusion\\\":\\\"^.*(map).*$\\\",\\\"exclusion\\\":\\\"^.*(contact).*$\\\"}\"";
+    private final static String FILTER_BOOLEAN = "{\"type\":\"boolean\",\"domain\":true,\"host\":false,\"schema\":false}";
+    private final static String FILTER_INTEGER = "{\"type\":\"integer\",\"maxDepth\":1,\"minDepth\":1,\"maxOutlinks\":100}";
+    private final static String FILTER_STRING = "{\"type\":\"string\",\"inclusion\":\"^.*(map).*$\",\"exclusion\":\"^.*(contact).*$\"}";
 
     private static final String DEFAULT_NAME = "name_";
     private static final String UPDATED_NAME = "name-";
@@ -73,7 +74,12 @@ class CrawlerResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Crawler createEntity(EntityManager em) {
-        return new Crawler().name(DEFAULT_NAME).fetchInterval(DEFAULT_FETCH_INTERVAL).source(DEFAULT_SOURCE).addFilters(new Filters().configuration(FILTER));
+        return new Crawler().name(DEFAULT_NAME)
+                            .fetchInterval(DEFAULT_FETCH_INTERVAL)
+                            .source(DEFAULT_SOURCE)
+                            .addFilters(new Filters().configuration(FILTER_BOOLEAN))
+                            .addFilters(new Filters().configuration(FILTER_INTEGER))
+                            .addFilters(new Filters().configuration(FILTER_STRING));
     }
 
     /**
@@ -83,7 +89,8 @@ class CrawlerResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Crawler createUpdatedEntity(EntityManager em) {
-        return new Crawler().name(UPDATED_NAME).fetchInterval(UPDATED_FETCH_INTERVAL).source(UPDATED_SOURCE).addFilters(new Filters().configuration(FILTER));
+        Crawler crawler = new Crawler().name(UPDATED_NAME).fetchInterval(UPDATED_FETCH_INTERVAL).source(UPDATED_SOURCE).addFilters(new Filters().configuration(FILTER_INTEGER));
+        return crawler;
     }
 
     @BeforeEach
@@ -114,7 +121,7 @@ class CrawlerResourceIT {
         assertThat(testCrawler.getName()).isEqualTo(DEFAULT_NAME);
         assertThat(testCrawler.getFetchInterval()).isEqualTo(DEFAULT_FETCH_INTERVAL);
         assertThat(testCrawler.getSource()).isEqualTo(DEFAULT_SOURCE);
-        assertThat(testCrawler.getFilters()).hasSize(1);
+        assertThat(testCrawler.getFilters()).hasAtLeastOneElementOfType(Filters.class);
     }
 
     @Test
@@ -122,6 +129,30 @@ class CrawlerResourceIT {
     void createCrawlerWithExistingId() throws Exception {
         // Create the Crawler with an existing ID
         crawler.setId(1L);
+        CrawlerDto crawlerDto = crawlerMapper.toDto(crawler);
+
+        int databaseSizeBeforeCreate = crawlerRepository.findAll().size();
+
+        // An entity with an existing ID cannot be created, so this API call must fail
+        restCrawlerMockMvc
+            .perform(
+                post(ENTITY_API_URL)
+                    .with(csrf())
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(TestUtil.convertObjectToJsonBytes(crawlerDto))
+            )
+            .andExpect(status().isBadRequest());
+
+        // Validate the Crawler in the database
+        List<Crawler> crawlerList = crawlerRepository.findAll();
+        assertThat(crawlerList).hasSize(databaseSizeBeforeCreate);
+    }
+
+    @Test
+    @Transactional
+    void createCrawlerWithWrongFilterConfiguration() throws Exception {
+        // Create the Crawler with an existing ID
+        crawler.addFilters(new Filters().configuration(""));
         CrawlerDto crawlerDto = crawlerMapper.toDto(crawler);
 
         int databaseSizeBeforeCreate = crawlerRepository.findAll().size();
@@ -308,7 +339,7 @@ class CrawlerResourceIT {
         assertThat(testCrawler.getName()).isEqualTo(UPDATED_NAME);
         assertThat(testCrawler.getFetchInterval()).isEqualTo(UPDATED_FETCH_INTERVAL);
         assertThat(testCrawler.getSource()).isEqualTo(UPDATED_SOURCE);
-        assertThat(testCrawler.getFilters()).hasSize(1);
+        assertThat(testCrawler.getFilters()).hasAtLeastOneElementOfType(Filters.class);
     }
 
     @Test
@@ -334,6 +365,36 @@ class CrawlerResourceIT {
         List<Crawler> crawlerList = crawlerRepository.findAll();
         assertThat(crawlerList).hasSize(databaseSizeBeforeUpdate);
     }
+
+    @Test
+    @Transactional
+    void putCrawlerWithWrongFilterConfiguration() throws Exception {
+        // Initialize the database
+        crawlerRepository.saveAndFlush(crawler);
+
+        int databaseSizeBeforeUpdate = crawlerRepository.findAll().size();
+
+        // Update the crawler
+        Crawler updatedCrawler = crawlerRepository.findById(crawler.getId()).get();
+        // Disconnect from session so that the updates on updatedCrawler are not directly saved in db
+        em.detach(updatedCrawler);
+        updatedCrawler.name(UPDATED_NAME).fetchInterval(UPDATED_FETCH_INTERVAL).source(UPDATED_SOURCE).addFilters(new Filters().configuration(""));
+        CrawlerDto crawlerDto = crawlerMapper.toDto(updatedCrawler);
+
+        restCrawlerMockMvc
+            .perform(
+                put(ENTITY_API_URL_ID, crawlerDto.getId())
+                    .with(csrf())
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(TestUtil.convertObjectToJsonBytes(crawlerDto))
+            )
+            .andExpect(status().isBadRequest());
+
+        // Validate the Crawler in the database
+        List<Crawler> crawlerList = crawlerRepository.findAll();
+        assertThat(crawlerList).hasSize(databaseSizeBeforeUpdate);
+    }
+
 
     @Test
     @Transactional
@@ -413,7 +474,7 @@ class CrawlerResourceIT {
         assertThat(testCrawler.getName()).isEqualTo(DEFAULT_NAME);
         assertThat(testCrawler.getFetchInterval()).isEqualTo(DEFAULT_FETCH_INTERVAL);
         assertThat(testCrawler.getSource()).isEqualTo(UPDATED_SOURCE);
-        assertThat(testCrawler.getFilters()).hasSize(1);
+        assertThat(testCrawler.getFilters()).hasAtLeastOneElementOfType(Filters.class);
     }
 
     @Test

@@ -2,6 +2,7 @@ package com.technical.assignment.crawler.web.rest;
 
 import com.technical.assignment.crawler.repository.CrawlerRepository;
 import com.technical.assignment.crawler.service.CrawlerService;
+import com.technical.assignment.crawler.service.FilterValidationService;
 import com.technical.assignment.crawler.service.dto.CrawlerDto;
 import com.technical.assignment.crawler.web.rest.errors.BadRequestAlertException;
 import org.slf4j.Logger;
@@ -41,10 +42,13 @@ public class CrawlerResource {
 
     private final CrawlerService crawlerService;
 
+    private final FilterValidationService filterValidationService;
+
     private final CrawlerRepository crawlerRepository;
 
-    public CrawlerResource(CrawlerService crawlerService, CrawlerRepository crawlerRepository) {
+    public CrawlerResource(CrawlerService crawlerService, FilterValidationService filterValidationService, CrawlerRepository crawlerRepository) {
         this.crawlerService = crawlerService;
+        this.filterValidationService = filterValidationService;
         this.crawlerRepository = crawlerRepository;
     }
 
@@ -61,6 +65,11 @@ public class CrawlerResource {
         if (crawlerDto.getId() != null) {
             throw new BadRequestAlertException("A new crawler cannot already have an ID", ENTITY_NAME, "idexists");
         }
+
+        if(!crawlerDto.getFilters().stream().allMatch(filterValidationService::hasValidConfigurations)){
+            throw new BadRequestAlertException("The configuration of the filters are not properly configured", ENTITY_NAME, "misconfiguration");
+        }
+
         CrawlerDto result = crawlerService.save(crawlerDto);
         return ResponseEntity
             .created(new URI("/api/crawlers/" + result.getId()))
@@ -93,6 +102,10 @@ public class CrawlerResource {
 
         if (!crawlerRepository.existsById(id)) {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
+        }
+
+        if(!crawlerDto.getFilters().stream().allMatch(filterValidationService::hasValidConfigurations)){
+            throw new BadRequestAlertException("The configuration of the filters are not properly configured", ENTITY_NAME, "idexists");
         }
 
         CrawlerDto result = crawlerService.update(crawlerDto);
