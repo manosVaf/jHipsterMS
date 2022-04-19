@@ -686,7 +686,801 @@
 					"response": []
 				},
 				{
-					"name": "Get Crawler 10 Copy",
+					"name": "Delete Crawler 10",
+					"request": {
+						"auth": {
+							"type": "oauth2",
+							"oauth2": [
+								{
+									"key": "scope",
+									"value": "openid offline_access",
+									"type": "string"
+								},
+								{
+									"key": "addTokenTo",
+									"value": "header",
+									"type": "string"
+								},
+								{
+									"key": "grant_type",
+									"value": "client_credentials",
+									"type": "string"
+								},
+								{
+									"key": "tokenType",
+									"value": "Bearer",
+									"type": "string"
+								},
+								{
+									"key": "client_authentication",
+									"value": "header",
+									"type": "string"
+								},
+								{
+									"key": "accessTokenUrl",
+									"value": "http://localhost:9080/auth/realms/jhipster/protocol/openid-connect/token",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "user",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "user",
+									"type": "string"
+								},
+								{
+									"key": "clientSecret",
+									"value": "web_app",
+									"type": "string"
+								},
+								{
+									"key": "clientId",
+									"value": "web_app",
+									"type": "string"
+								},
+								{
+									"key": "tokenName",
+									"value": "keycloak token",
+									"type": "string"
+								},
+								{
+									"key": "authUrl",
+									"value": "http://keycloak:9080/auth/realms/myrealm/auth",
+									"type": "string"
+								},
+								{
+									"key": "useBrowser",
+									"value": true,
+									"type": "boolean"
+								},
+								{
+									"key": "headerPrefix",
+									"value": "Bearer",
+									"type": "string"
+								},
+								{
+									"key": "redirect_uri",
+									"value": "http://localhost:8081/*/*",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/api/crawlers/10",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"crawlers",
+								"10"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Task 2",
+			"item": [
+				{
+					"name": "Insert Crawler",
+					"request": {
+						"auth": {
+							"type": "oauth2",
+							"oauth2": [
+								{
+									"key": "tokenType",
+									"value": "Bearer",
+									"type": "string"
+								},
+								{
+									"key": "accessToken",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJhUGNzb3o1dHpQelQ5UWMzR2FMeUVoTlgzcUltX1ZKM19MX0RtbTVFSGp3In0.eyJleHAiOjE2NTAyODY3MDYsImlhdCI6MTY1MDI4NjQwNiwianRpIjoiYmEwNjAzYTYtZTM5OS00NDAxLWFkN2UtMDI0OGVjMzIzMjIzIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo5MDgwL2F1dGgvcmVhbG1zL2poaXBzdGVyIiwiYXVkIjoiYWNjb3VudCIsInN1YiI6IjUzMDcyNWFjLTYwYTUtNDkyNS04ODExLTZjZGM0NzA4MzQ5MCIsInR5cCI6IkJlYXJlciIsImF6cCI6IndlYl9hcHAiLCJhY3IiOiIxIiwiYWxsb3dlZC1vcmlnaW5zIjpbImh0dHA6Ly9sb2NhbGhvc3Q6ODA4MSIsIioiXSwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbIm9mZmxpbmVfYWNjZXNzIiwiZGVmYXVsdC1yb2xlcy1qaGlwc3RlciIsInVtYV9hdXRob3JpemF0aW9uIl19LCJyZXNvdXJjZV9hY2Nlc3MiOnsiYWNjb3VudCI6eyJyb2xlcyI6WyJtYW5hZ2UtYWNjb3VudCIsIm1hbmFnZS1hY2NvdW50LWxpbmtzIiwidmlldy1wcm9maWxlIl19fSwic2NvcGUiOiJlbWFpbCBwcm9maWxlIiwiY2xpZW50SWQiOiJ3ZWJfYXBwIiwiZW1haWxfdmVyaWZpZWQiOmZhbHNlLCJjbGllbnRIb3N0IjoiMTcyLjE4LjAuMSIsInJvbGVzIjpbIm9mZmxpbmVfYWNjZXNzIiwiZGVmYXVsdC1yb2xlcy1qaGlwc3RlciIsInVtYV9hdXRob3JpemF0aW9uIl0sInByZWZlcnJlZF91c2VybmFtZSI6InNlcnZpY2UtYWNjb3VudC13ZWJfYXBwIiwiY2xpZW50QWRkcmVzcyI6IjE3Mi4xOC4wLjEifQ.RxLBfVD3G6ktyH_wzXylHQ-r0snpqFdSeDhgM_puupcTbqyp9R8AqsYqhDIEnbBq1KPNbpKNPSpo4-E-hsnlOmrYuRmQoS4Uh662TR2u6c66jmB1T-FYXv9wXlhw-LpEDU47uJgp_1wyj1JDsTWhR0RSHQCRbox8KHTZaljvwKFtsAP0DFXDBvxR-CvYI2dsU5UXk7q5zMhKptW-vo8xH6xqJ04cBffX_txFeChP54MaGX3G_-hSIvbtFs1Qf9rVqwaAosC0c1rDFIDIpuLPsdfl4E6rlNQ1F-84IFt67ST0UH6GVO-0KRK5Qh-_SmvNGfbYbo-jQfeTmXemLAqgiQ",
+									"type": "string"
+								},
+								{
+									"key": "grant_type",
+									"value": "client_credentials",
+									"type": "string"
+								},
+								{
+									"key": "scope",
+									"value": "",
+									"type": "string"
+								},
+								{
+									"key": "client_authentication",
+									"value": "header",
+									"type": "string"
+								},
+								{
+									"key": "accessTokenUrl",
+									"value": "http://localhost:9080/auth/realms/jhipster/protocol/openid-connect/token",
+									"type": "string"
+								},
+								{
+									"key": "addTokenTo",
+									"value": "header",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "user",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "user",
+									"type": "string"
+								},
+								{
+									"key": "clientSecret",
+									"value": "web_app",
+									"type": "string"
+								},
+								{
+									"key": "clientId",
+									"value": "web_app",
+									"type": "string"
+								},
+								{
+									"key": "tokenName",
+									"value": "keycloak token",
+									"type": "string"
+								},
+								{
+									"key": "authUrl",
+									"value": "http://keycloak:9080/auth/realms/myrealm/auth",
+									"type": "string"
+								},
+								{
+									"key": "useBrowser",
+									"value": true,
+									"type": "boolean"
+								},
+								{
+									"key": "headerPrefix",
+									"value": "Bearer",
+									"type": "string"
+								},
+								{
+									"key": "redirect_uri",
+									"value": "http://localhost:8081/*/*",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\" : \"test_crawler\",\r\n    \"source\" : \"http://www.test100.com\",\r\n    \"fetchInterval\" : 5,\r\n    \"filters\": [\r\n    {\r\n      \"configuration\": {\r\n        \"type\": \"integer\",\r\n        \"maxDepth\": 20,\r\n        \"minDepth\": 1,\r\n        \"maxOutlinks\": 100,\r\n        \"minOutlinks\": 0\r\n      }\r\n    },\r\n    {\r\n      \"configuration\": {\r\n        \"type\": \"boolean\",\r\n        \"domain\": true,\r\n        \"host\": false,\r\n        \"schema\": false\r\n      }\r\n    },\r\n    {\r\n      \"configuration\": {\r\n        \"type\": \"string\",\r\n        \"inclusion\": \"^.*(map).*$\",\r\n        \"exclusion\": \"^.*(contact).*$\"\r\n      }\r\n    }\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/api/crawlers/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"crawlers",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Crawler 10",
+					"request": {
+						"auth": {
+							"type": "oauth2",
+							"oauth2": [
+								{
+									"key": "grant_type",
+									"value": "client_credentials",
+									"type": "string"
+								},
+								{
+									"key": "scope",
+									"value": "",
+									"type": "string"
+								},
+								{
+									"key": "tokenType",
+									"value": "Bearer",
+									"type": "string"
+								},
+								{
+									"key": "accessToken",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJwZ0NQX1FzV1YyalJ1OTlOTzMxV0paWmZYZUY4aVVFdEtVYnNqVkZKZFVZIn0.eyJleHAiOjE2NDk4NDY0NjUsImlhdCI6MTY0OTg0NjE2NSwianRpIjoiMTM3ODAyODktNjM3OS00NGY4LTliZjQtZDAwMWViMTQzODMwIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo5MDgwL2F1dGgvcmVhbG1zL2poaXBzdGVyIiwiYXVkIjoiYWNjb3VudCIsInN1YiI6ImFiMmUxOGY0LTRlYjYtNDM4Zi04NDlkLTUxOGNmZDVlOGZiNSIsInR5cCI6IkJlYXJlciIsImF6cCI6IndlYl9hcHAiLCJhY3IiOiIxIiwiYWxsb3dlZC1vcmlnaW5zIjpbIioiXSwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbIm9mZmxpbmVfYWNjZXNzIiwiZGVmYXVsdC1yb2xlcy1qaGlwc3RlciIsInVtYV9hdXRob3JpemF0aW9uIl19LCJyZXNvdXJjZV9hY2Nlc3MiOnsiYWNjb3VudCI6eyJyb2xlcyI6WyJtYW5hZ2UtYWNjb3VudCIsIm1hbmFnZS1hY2NvdW50LWxpbmtzIiwidmlldy1wcm9maWxlIl19fSwic2NvcGUiOiJtaWNyb3Byb2ZpbGUtand0IGVtYWlsIGFkZHJlc3MgcGhvbmUgcHJvZmlsZSBvZmZsaW5lX2FjY2VzcyIsInVwbiI6InNlcnZpY2UtYWNjb3VudC13ZWJfYXBwIiwiY2xpZW50SG9zdCI6IjE3Mi4xOC4wLjEiLCJjbGllbnRJZCI6IndlYl9hcHAiLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsImFkZHJlc3MiOnt9LCJyb2xlcyI6WyJvZmZsaW5lX2FjY2VzcyIsImRlZmF1bHQtcm9sZXMtamhpcHN0ZXIiLCJ1bWFfYXV0aG9yaXphdGlvbiJdLCJncm91cHMiOlsib2ZmbGluZV9hY2Nlc3MiLCJkZWZhdWx0LXJvbGVzLWpoaXBzdGVyIiwidW1hX2F1dGhvcml6YXRpb24iXSwicHJlZmVycmVkX3VzZXJuYW1lIjoic2VydmljZS1hY2NvdW50LXdlYl9hcHAiLCJjbGllbnRBZGRyZXNzIjoiMTcyLjE4LjAuMSJ9.JPWUVnXS4DnAdOwbS4m6G4Yj4MHRKlmZ7MpixjrQSVYfv28aZzZzePvaAyG5gFDMb9Zm3Dt00G3ga5Z3wfvbZXRDnFDAHj-bhoi5zNiPUZd2SLICcmP86r_wjqVJWllP_jYNdydjw-f0GtAINMkLEGLgVZlcIudCGXpMNQIjP-BKG6bs4jUOQ5Dz2ldiWeh-2tfmMlex4g-rDcDmtFGYyBSx49Sns6v8CvX-kCkoHHEsf3m5p5cYQJ4bxzxbWUrsgCQ4dHIH8jiZHG7qBgPQ2w_tO9x5p6QucDLashKPcjxp_3AZ264Pp7poJgrg2WSB3Azu6sb95_qIevHLPgDz-g",
+									"type": "string"
+								},
+								{
+									"key": "client_authentication",
+									"value": "header",
+									"type": "string"
+								},
+								{
+									"key": "accessTokenUrl",
+									"value": "http://localhost:9080/auth/realms/jhipster/protocol/openid-connect/token",
+									"type": "string"
+								},
+								{
+									"key": "addTokenTo",
+									"value": "header",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "user",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "user",
+									"type": "string"
+								},
+								{
+									"key": "clientSecret",
+									"value": "web_app",
+									"type": "string"
+								},
+								{
+									"key": "clientId",
+									"value": "web_app",
+									"type": "string"
+								},
+								{
+									"key": "tokenName",
+									"value": "keycloak token",
+									"type": "string"
+								},
+								{
+									"key": "authUrl",
+									"value": "http://keycloak:9080/auth/realms/myrealm/auth",
+									"type": "string"
+								},
+								{
+									"key": "useBrowser",
+									"value": true,
+									"type": "boolean"
+								},
+								{
+									"key": "headerPrefix",
+									"value": "Bearer",
+									"type": "string"
+								},
+								{
+									"key": "redirect_uri",
+									"value": "http://localhost:8081/*/*",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\" : 10,\r\n    \"name\" : \"updatedCrawler\",\r\n    \"source\" : \"http://www.test.com\",\r\n    \"fetchInterval\" : 100,\r\n    \"filters\": [\r\n        {\r\n            \"configuration\": {\r\n                \"type\": \"integer\",\r\n                \"maxDepth\": 20,\r\n                \"minDepth\": 1,\r\n                \"maxOutlinks\": 100,\r\n                \"minOutlinks\": 0\r\n            }\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/api/crawlers/10",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"crawlers",
+								"10"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Partial Update Crawler 10",
+					"request": {
+						"auth": {
+							"type": "oauth2",
+							"oauth2": [
+								{
+									"key": "tokenType",
+									"value": "",
+									"type": "string"
+								},
+								{
+									"key": "accessToken",
+									"value": "",
+									"type": "string"
+								},
+								{
+									"key": "grant_type",
+									"value": "client_credentials",
+									"type": "string"
+								},
+								{
+									"key": "scope",
+									"value": "",
+									"type": "string"
+								},
+								{
+									"key": "client_authentication",
+									"value": "header",
+									"type": "string"
+								},
+								{
+									"key": "accessTokenUrl",
+									"value": "http://localhost:9080/auth/realms/jhipster/protocol/openid-connect/token",
+									"type": "string"
+								},
+								{
+									"key": "addTokenTo",
+									"value": "header",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "user",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "user",
+									"type": "string"
+								},
+								{
+									"key": "clientSecret",
+									"value": "web_app",
+									"type": "string"
+								},
+								{
+									"key": "clientId",
+									"value": "web_app",
+									"type": "string"
+								},
+								{
+									"key": "tokenName",
+									"value": "keycloak token",
+									"type": "string"
+								},
+								{
+									"key": "authUrl",
+									"value": "http://keycloak:9080/auth/realms/myrealm/auth",
+									"type": "string"
+								},
+								{
+									"key": "useBrowser",
+									"value": true,
+									"type": "boolean"
+								},
+								{
+									"key": "headerPrefix",
+									"value": "Bearer",
+									"type": "string"
+								},
+								{
+									"key": "redirect_uri",
+									"value": "http://localhost:8081/*/*",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\" : 10,\r\n    \"name\" : \"partialUpdatedCrawler\",\r\n    \"source\" : \"http://www.test.com\",\r\n    \"fetchInterval\" : 100,\r\n    \"filters\": [\r\n        {\r\n            \"configuration\": {\r\n                \"type\": \"integer\",\r\n                \"maxDepth\": 20,\r\n                \"minDepth\": 1,\r\n                \"maxOutlinks\": 100,\r\n                \"minOutlinks\": 0\r\n            }\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/api/crawlers/10",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"crawlers",
+								"10"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all Crawlers",
+					"request": {
+						"auth": {
+							"type": "oauth2",
+							"oauth2": [
+								{
+									"key": "tokenType",
+									"value": "Bearer",
+									"type": "string"
+								},
+								{
+									"key": "accessToken",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJZa3dMRGFjWVJzZTVEQkpEb3JIWW1xc3NmeGhHbDNwbWdycnA0eGtuYVFBIn0.eyJleHAiOjE2NTAxMjcxMTQsImlhdCI6MTY1MDEyNjgxNCwiYXV0aF90aW1lIjoxNjUwMTI2ODE0LCJqdGkiOiIxMDI5NTQ5Zi02ODNkLTQwODUtYmNmYi0xYzQwMjY4NzBjODQiLCJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjkwODAvYXV0aC9yZWFsbXMvamhpcHN0ZXIiLCJhdWQiOiJhY2NvdW50Iiwic3ViIjoiYzRhZjRlMmYtYjQzMi00YzNiLTg0MDUtY2NhODZjZDViOTdiIiwidHlwIjoiQmVhcmVyIiwiYXpwIjoid2ViX2FwcCIsInNlc3Npb25fc3RhdGUiOiIyZWVjZjEyYy04ZDlhLTQzZmQtOWVlYi0xMjZmOGVlYzE3N2UiLCJhY3IiOiIxIiwiYWxsb3dlZC1vcmlnaW5zIjpbImh0dHA6Ly9sb2NhbGhvc3Q6ODA4MSIsIioiXSwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbIlJPTEVfVVNFUiIsIm9mZmxpbmVfYWNjZXNzIiwidW1hX2F1dGhvcml6YXRpb24iXX0sInJlc291cmNlX2FjY2VzcyI6eyJhY2NvdW50Ijp7InJvbGVzIjpbIm1hbmFnZS1hY2NvdW50IiwibWFuYWdlLWFjY291bnQtbGlua3MiLCJ2aWV3LXByb2ZpbGUiXX19LCJzY29wZSI6Im9wZW5pZCBtaWNyb3Byb2ZpbGUtand0IGVtYWlsIGFkZHJlc3MgcGhvbmUgcHJvZmlsZSBvZmZsaW5lX2FjY2VzcyIsInNpZCI6IjJlZWNmMTJjLThkOWEtNDNmZC05ZWViLTEyNmY4ZWVjMTc3ZSIsInVwbiI6InVzZXIiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiYWRkcmVzcyI6e30sInJvbGVzIjpbIlJPTEVfVVNFUiIsIm9mZmxpbmVfYWNjZXNzIiwidW1hX2F1dGhvcml6YXRpb24iXSwibmFtZSI6IlVzZXIiLCJncm91cHMiOlsiUk9MRV9VU0VSIiwib2ZmbGluZV9hY2Nlc3MiLCJ1bWFfYXV0aG9yaXphdGlvbiJdLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJ1c2VyIiwiZ2l2ZW5fbmFtZSI6IiIsImZhbWlseV9uYW1lIjoiVXNlciIsImVtYWlsIjoidXNlckBsb2NhbGhvc3QifQ.KNwwGpvILCLBYjDioI6BBdHkNfu7_pRZATH55FRpLfgiYvr7VIVG5QfjYr18Z6jvo8VPJ56rR2_KaRtUy5smXty_1Rnp6v78LLvvxcSxEjAXPXSuAllCMCNLanGXO8yFoK2mDCF9E3pcSKF9aVVP1PIgQWlrDi7BQc4ADJtoJfDwsy71X1NFOyM1ERu2WFUseqQNSCtlgx-ESlSEX13syJa-i1gnZNV3khLfJUWd02vsOYZmdvfrFiN8s1YhZaCex9HrS1BL6yGM0MpgiBbsIjRg9S_Utdkp1ITe8SzOJPVX1bxpOQlRiKnEDROK8oQQ2IK6-0UPd9xIPX98GYeXXA",
+									"type": "string"
+								},
+								{
+									"key": "headerPrefix",
+									"value": "Bearer",
+									"type": "string"
+								},
+								{
+									"key": "grant_type",
+									"value": "authorization_code",
+									"type": "string"
+								},
+								{
+									"key": "accessTokenUrl",
+									"value": "http://localhost:9080/auth/realms/jhipster/protocol/openid-connect/token",
+									"type": "string"
+								},
+								{
+									"key": "authUrl",
+									"value": "http://localhost:9080/auth/realms/jhipster/protocol/openid-connect/auth",
+									"type": "string"
+								},
+								{
+									"key": "redirect_uri",
+									"value": "https://localhost:*",
+									"type": "string"
+								},
+								{
+									"key": "scope",
+									"value": "web-origins email jhipster profile roles address microprofile-jwt offline_access phone openid",
+									"type": "string"
+								},
+								{
+									"key": "useBrowser",
+									"value": false,
+									"type": "boolean"
+								},
+								{
+									"key": "client_authentication",
+									"value": "header",
+									"type": "string"
+								},
+								{
+									"key": "addTokenTo",
+									"value": "header",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "user",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "user",
+									"type": "string"
+								},
+								{
+									"key": "clientSecret",
+									"value": "web_app",
+									"type": "string"
+								},
+								{
+									"key": "clientId",
+									"value": "web_app",
+									"type": "string"
+								},
+								{
+									"key": "tokenName",
+									"value": "keycloak token",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8081/api/crawlers/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"crawlers",
+								""
+							],
+							"query": [
+								{
+									"key": "size",
+									"value": "5",
+									"disabled": true
+								},
+								{
+									"key": "page",
+									"value": "1",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all Crawlers With Pagination",
+					"request": {
+						"auth": {
+							"type": "oauth2",
+							"oauth2": [
+								{
+									"key": "tokenType",
+									"value": "",
+									"type": "string"
+								},
+								{
+									"key": "accessToken",
+									"value": "",
+									"type": "string"
+								},
+								{
+									"key": "headerPrefix",
+									"value": "Bearer",
+									"type": "string"
+								},
+								{
+									"key": "grant_type",
+									"value": "authorization_code",
+									"type": "string"
+								},
+								{
+									"key": "accessTokenUrl",
+									"value": "http://localhost:9080/auth/realms/jhipster/protocol/openid-connect/token",
+									"type": "string"
+								},
+								{
+									"key": "authUrl",
+									"value": "http://localhost:9080/auth/realms/jhipster/protocol/openid-connect/auth",
+									"type": "string"
+								},
+								{
+									"key": "redirect_uri",
+									"value": "https://localhost:*",
+									"type": "string"
+								},
+								{
+									"key": "scope",
+									"value": "web-origins email jhipster profile roles address microprofile-jwt offline_access phone openid",
+									"type": "string"
+								},
+								{
+									"key": "useBrowser",
+									"value": false,
+									"type": "boolean"
+								},
+								{
+									"key": "client_authentication",
+									"value": "header",
+									"type": "string"
+								},
+								{
+									"key": "addTokenTo",
+									"value": "header",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "user",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "user",
+									"type": "string"
+								},
+								{
+									"key": "clientSecret",
+									"value": "web_app",
+									"type": "string"
+								},
+								{
+									"key": "clientId",
+									"value": "web_app",
+									"type": "string"
+								},
+								{
+									"key": "tokenName",
+									"value": "keycloak token",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/api/crawlers/?size=5",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"crawlers",
+								""
+							],
+							"query": [
+								{
+									"key": "size",
+									"value": "5"
+								},
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Crawler 10",
+					"request": {
+						"auth": {
+							"type": "oauth2",
+							"oauth2": [
+								{
+									"key": "scope",
+									"value": "openid offline_access",
+									"type": "string"
+								},
+								{
+									"key": "addTokenTo",
+									"value": "header",
+									"type": "string"
+								},
+								{
+									"key": "grant_type",
+									"value": "client_credentials",
+									"type": "string"
+								},
+								{
+									"key": "tokenType",
+									"value": "Bearer",
+									"type": "string"
+								},
+								{
+									"key": "client_authentication",
+									"value": "header",
+									"type": "string"
+								},
+								{
+									"key": "accessTokenUrl",
+									"value": "http://localhost:9080/auth/realms/jhipster/protocol/openid-connect/token",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "user",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "user",
+									"type": "string"
+								},
+								{
+									"key": "clientSecret",
+									"value": "web_app",
+									"type": "string"
+								},
+								{
+									"key": "clientId",
+									"value": "web_app",
+									"type": "string"
+								},
+								{
+									"key": "tokenName",
+									"value": "keycloak token",
+									"type": "string"
+								},
+								{
+									"key": "authUrl",
+									"value": "http://keycloak:9080/auth/realms/myrealm/auth",
+									"type": "string"
+								},
+								{
+									"key": "useBrowser",
+									"value": true,
+									"type": "boolean"
+								},
+								{
+									"key": "headerPrefix",
+									"value": "Bearer",
+									"type": "string"
+								},
+								{
+									"key": "redirect_uri",
+									"value": "http://localhost:8081/*/*",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/api/crawlers/10",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"crawlers",
+								"10"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Crawler 10",
 					"request": {
 						"auth": {
 							"type": "oauth2",
