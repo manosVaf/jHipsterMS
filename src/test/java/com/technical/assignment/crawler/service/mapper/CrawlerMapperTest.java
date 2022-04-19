@@ -1,22 +1,27 @@
 package com.technical.assignment.crawler.service.mapper;
 
 import com.technical.assignment.crawler.domain.Crawler;
+import com.technical.assignment.crawler.domain.Filters;
 import com.technical.assignment.crawler.service.dto.CrawlerDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class CrawlerMapperTest {
-
+    private final static String FILTER = "\"{\\\"type\\\":\\\"boolean\\\",\\\"domain\\\":true,\\\"host\\\":false,\\\"schema\\\":false}\"";
+    private final static String FILTER1 = "\"{\\\"type\\\":\\\"string\\\",\\\"inclusion\\\":\\\"^.*(map).*$\\\",\\\"exclusion\\\":\\\"^.*(contact).*$\\\"}\"";
+    private FiltersMapper filtersMapper;
     private CrawlerMapper crawlerMapper;
 
     @BeforeEach
     public void setUp() {
-        crawlerMapper = new CrawlerMapperImpl();
+        filtersMapper = new FiltersMapperImpl();
+        crawlerMapper = new CrawlerMapperImpl(filtersMapper);
     }
 
     @Test
@@ -73,6 +78,45 @@ class CrawlerMapperTest {
         crawlers = Arrays.asList(crawler, crawler);
         List<CrawlerDto> dtosList = crawlerMapper.toDto(crawlers);
         assertEquals(crawlers.size(), dtosList.size());
+    }
+
+    @Test
+    void addFilter(){
+        Crawler domain = new Crawler();
+
+        final Filters filter = new Filters();
+        filter.setConfiguration(FILTER);
+
+        final Filters filter1 = new Filters();
+        filter1.setConfiguration(FILTER1);
+
+        final Filters filter2 = new Filters();
+        filter1.setConfiguration("FILTER1");
+
+        List<Filters> filters = new ArrayList<>();
+        filters.add(filter);
+        filters.add(filter1);
+
+        domain = domain.configuration(filters);
+        assertEquals(2, domain.getFilters().size());
+
+        domain = domain.addFilters(filter2);
+        assertEquals(3, domain.getFilters().size());
+
+        domain.removeFilters(filter).removeFilters(filter1).removeFilters(filter2);
+        assertEquals(0, domain.getFilters().size());
+    }
+
+    @Test
+    void partialUpdateTest(){
+        CrawlerDto dto = crawlerDto();
+        Crawler domain = crawlerMapper.toEntity(dto);
+
+        crawlerMapper.partialUpdate(domain, dto);
+        assertEquals(dto.getId(), domain.getId());
+        assertEquals(dto.getName(), domain.getName());
+        assertEquals(dto.getFetchInterval(), domain.getFetchInterval());
+        assertEquals(new ArrayList<>(), dto.getFilters());
     }
 
     private CrawlerDto crawlerDto(){

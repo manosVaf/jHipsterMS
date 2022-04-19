@@ -1,0 +1,7 @@
+id;configuration;crawler_id1;{"id": 3, to_jsonb("configuration": {"type": "string","inclusion": "^.*(map).*$","exclusion": "^.*(contact).*$"}});12;{"id": 3,to_jsonb("configuration": {"type": "string","inclusion": "^.*(map).*$","exclusion": "^.*(contact).*$"}};23;{"id": 2,to_jsonb("configuration": {"type": "boolean","domain": true,"host": false,"schema": false}};34;{"id": 2,to_jsonb("configuration": {"type": "boolean","domain": true,"host": false,"schema": false}};45;{"id": 3,"configuration": {"type": "string","inclusion": "^.*(map).*$","exclusion": "^.*(contact).*$"}};56;{"id": 3,"configuration": {"type": "string","inclusion": "^.*(map).*$","exclusion": "^.*(contact).*$"}};67;{"id": 3,"configuration": {"type": "string","inclusion": "^.*(map).*$","exclusion": "^.*(contact).*$"}};78;{"id": 2,"configuration": {"type": "boolean","domain": true,"host": false,"schema": false}};109;{"id": 3,"configuration": {"type": "string","inclusion": "^.*(map).*$","exclusion": "^.*(contact).*$"}};1010;{"id": 3,"configuration": {"type": "string","inclusion": "^.*(map).*$","exclusion": "^.*(contact).*$"}};10
+
+
+
+
+
+{"id": 1951, "configuration": { "type": "integer","maxDepth": 20,"minDepth": 1,"maxOutlinks": 100,"minOutlinks": 0}}

@@ -1,16 +1,17 @@
 package com.technical.assignment.crawler.service.mapper;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import com.technical.assignment.crawler.domain.User;
 import com.technical.assignment.crawler.service.dto.AdminUserDto;
 import com.technical.assignment.crawler.service.dto.UserDto;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Unit tests for {@link UserMapper}.
@@ -35,6 +36,7 @@ class UserMapperTest {
         user.setLastName("doe");
         user.setImageUrl("image_url");
         user.setLangKey("en");
+        user.setLogin("log in");
 
         userDto = new AdminUserDto(user);
     }

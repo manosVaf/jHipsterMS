@@ -1,34 +1,27 @@
 package com.technical.assignment.crawler.web.rest;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.Matchers.hasItem;
-import static org.hamcrest.Matchers.hasItems;
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
 import com.technical.assignment.crawler.IntegrationTest;
 import com.technical.assignment.crawler.domain.Authority;
 import com.technical.assignment.crawler.domain.User;
 import com.technical.assignment.crawler.repository.UserRepository;
 import com.technical.assignment.crawler.security.AuthoritiesConstants;
 import com.technical.assignment.crawler.service.dto.AdminUserDto;
-import com.technical.assignment.crawler.service.dto.UserDto;
 import com.technical.assignment.crawler.service.mapper.UserMapper;
-import java.time.Instant;
-import java.util.*;
-import java.util.function.Consumer;
-import javax.persistence.EntityManager;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.cache.CacheManager;
-import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.transaction.annotation.Transactional;
+
+import javax.persistence.EntityManager;
+import java.time.Instant;
+import java.util.*;
+import java.util.function.Consumer;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Integration tests for the {@link UserResource} REST controller.

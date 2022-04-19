@@ -7,5 +7,15 @@ import org.mapstruct.*;
 /**
  * Mapper for the entity {@link Crawler} and its DTO {@link CrawlerDto}.
  */
-@Mapper(componentModel = "spring")
-public interface CrawlerMapper extends EntityMapper<CrawlerDto, Crawler> {}
+@Mapper(componentModel = "spring",
+        injectionStrategy = InjectionStrategy.CONSTRUCTOR,
+        uses = FiltersMapper.class)
+public interface CrawlerMapper extends EntityMapper<CrawlerDto, Crawler> {
+    @Override
+    @Mapping(target = "filters", source = "filters")
+    Crawler toEntity(CrawlerDto dto);
+
+    @Override
+    @Mapping(target = "filters", source = "filters")
+    CrawlerDto toDto(Crawler entity);
+}

@@ -1,11 +1,15 @@
 package com.technical.assignment.crawler.service.dto;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import org.hibernate.validator.constraints.URL;
 
+import javax.validation.Valid;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import static com.technical.assignment.crawler.config.Constants.NAME_REGEX;
@@ -28,6 +32,9 @@ public class CrawlerDto implements Serializable {
     @NotNull
     @URL
     private String source;
+
+    @JsonDeserialize(as=ArrayList.class, contentAs=FiltersDto.class)
+    private List<@Valid FiltersDto> filters;
 
     public Long getId() {
         return id;
@@ -61,6 +68,14 @@ public class CrawlerDto implements Serializable {
         this.source = source;
     }
 
+    public List<FiltersDto> getFilters() {
+        return Objects.nonNull(filters) ? filters : new ArrayList<>();
+    }
+
+    public void setFilters(List<FiltersDto> filters) {
+        this.filters = filters;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -90,6 +105,7 @@ public class CrawlerDto implements Serializable {
             ", name='" + getName() + "'" +
             ", fetchInterval=" + getFetchInterval() +
             ", source='" + getSource() + "'" +
+            ", filters='" + getFilters() + "'" +
             "}";
     }
 }

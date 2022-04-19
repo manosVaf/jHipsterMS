@@ -7,6 +7,8 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.technical.assignment.crawler.config.Constants.NAME_REGEX;
 
@@ -38,6 +40,9 @@ public class Crawler implements Serializable {
     @URL
     @Column(name = "source", nullable = false)
     private String source;
+
+    @OneToMany(mappedBy = "crawler", orphanRemoval = true, cascade = CascadeType.ALL)
+    private List<Filters> filters = new ArrayList<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -93,6 +98,37 @@ public class Crawler implements Serializable {
         this.source = source;
     }
 
+    public List<Filters> getFilters() {
+        return this.filters;
+    }
+
+    public void setFilters(List<Filters> filters) {
+        if (this.filters != null) {
+            this.filters.forEach(i -> i.setCrawler(null));
+        }
+        if (filters != null) {
+            filters.forEach(i -> i.setCrawler(this));
+        }
+        this.filters = filters;
+    }
+
+    public Crawler configuration(List<Filters> filters) {
+        this.setFilters(filters);
+        return this;
+    }
+
+    public Crawler addFilters(Filters filters) {
+        this.filters.add(filters);
+        filters.setCrawler(this);
+        return this;
+    }
+
+    public Crawler removeFilters(Filters filters) {
+        this.filters.remove(filters);
+        filters.setCrawler(null);
+        return this;
+    }
+
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
     @Override
@@ -120,6 +156,7 @@ public class Crawler implements Serializable {
             ", name='" + getName() + "'" +
             ", fetchInterval=" + getFetchInterval() +
             ", source='" + getSource() + "'" +
+            ", filters='" + getFilters() + "'" +
             "}";
     }
 }

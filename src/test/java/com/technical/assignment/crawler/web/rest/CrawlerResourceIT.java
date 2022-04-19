@@ -2,6 +2,7 @@ package com.technical.assignment.crawler.web.rest;
 
 import com.technical.assignment.crawler.IntegrationTest;
 import com.technical.assignment.crawler.domain.Crawler;
+import com.technical.assignment.crawler.domain.Filters;
 import com.technical.assignment.crawler.repository.CrawlerRepository;
 import com.technical.assignment.crawler.service.dto.CrawlerDto;
 import com.technical.assignment.crawler.service.mapper.CrawlerMapper;
@@ -32,6 +33,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @WithMockUser
 class CrawlerResourceIT {
+    private final static String FILTER = "\"{\\\"type\\\":\\\"boolean\\\",\\\"domain\\\":true,\\\"host\\\":false,\\\"schema\\\":false}\"";
+    private final static String UPDATED_FILTER = "\"{\\\"type\\\":\\\"integer\\\",\\\"inclusion\\\":\\\"^.*(map).*$\\\",\\\"exclusion\\\":\\\"^.*(contact).*$\\\"}\"";
 
     private static final String DEFAULT_NAME = "name_";
     private static final String UPDATED_NAME = "name-";
@@ -61,6 +64,7 @@ class CrawlerResourceIT {
     private MockMvc restCrawlerMockMvc;
 
     private Crawler crawler;
+    private Filters filters;
 
     /**
      * Create an entity for this test.
@@ -69,8 +73,7 @@ class CrawlerResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Crawler createEntity(EntityManager em) {
-        Crawler crawler = new Crawler().name(DEFAULT_NAME).fetchInterval(DEFAULT_FETCH_INTERVAL).source(DEFAULT_SOURCE);
-        return crawler;
+        return new Crawler().name(DEFAULT_NAME).fetchInterval(DEFAULT_FETCH_INTERVAL).source(DEFAULT_SOURCE).addFilters(new Filters().configuration(FILTER));
     }
 
     /**
@@ -80,13 +83,13 @@ class CrawlerResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Crawler createUpdatedEntity(EntityManager em) {
-        Crawler crawler = new Crawler().name(UPDATED_NAME).fetchInterval(UPDATED_FETCH_INTERVAL).source(UPDATED_SOURCE);
-        return crawler;
+        return new Crawler().name(UPDATED_NAME).fetchInterval(UPDATED_FETCH_INTERVAL).source(UPDATED_SOURCE).addFilters(new Filters().configuration(FILTER));
     }
 
     @BeforeEach
     public void initTest() {
         crawler = createEntity(em);
+        filters = crawler.getFilters().get(0);
     }
 
     @Test
@@ -111,6 +114,7 @@ class CrawlerResourceIT {
         assertThat(testCrawler.getName()).isEqualTo(DEFAULT_NAME);
         assertThat(testCrawler.getFetchInterval()).isEqualTo(DEFAULT_FETCH_INTERVAL);
         assertThat(testCrawler.getSource()).isEqualTo(DEFAULT_SOURCE);
+        assertThat(testCrawler.getFilters()).hasSize(1);
     }
 
     @Test
@@ -185,6 +189,30 @@ class CrawlerResourceIT {
 
     @Test
     @Transactional
+    void createCrawlerWithFilterConfigurationRequired() throws Exception {
+        // Create the Crawler with an existing ID
+        crawler.getFilters().forEach(filters -> filters.setConfiguration(null));
+        CrawlerDto crawlerDto = crawlerMapper.toDto(crawler);
+
+        int databaseSizeBeforeCreate = crawlerRepository.findAll().size();
+
+        // An entity with an existing ID cannot be created, so this API call must fail
+        restCrawlerMockMvc
+            .perform(
+                post(ENTITY_API_URL)
+                    .with(csrf())
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(TestUtil.convertObjectToJsonBytes(crawlerDto))
+            )
+            .andExpect(status().isBadRequest());
+
+        // Validate the Crawler in the database
+        List<Crawler> crawlerList = crawlerRepository.findAll();
+        assertThat(crawlerList).hasSize(databaseSizeBeforeCreate);
+    }
+
+    @Test
+    @Transactional
     void checkSourceIsRequired() throws Exception {
         int databaseSizeBeforeTest = crawlerRepository.findAll().size();
         // set the field null
@@ -220,7 +248,8 @@ class CrawlerResourceIT {
             .andExpect(jsonPath("$.[*].id").value(hasItem(crawler.getId().intValue())))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
             .andExpect(jsonPath("$.[*].fetchInterval").value(hasItem(DEFAULT_FETCH_INTERVAL)))
-            .andExpect(jsonPath("$.[*].source").value(hasItem(DEFAULT_SOURCE)));
+            .andExpect(jsonPath("$.[*].source").value(hasItem(DEFAULT_SOURCE)))
+            .andExpect(jsonPath("$.[*].filters").exists());
     }
 
     @Test
@@ -237,7 +266,8 @@ class CrawlerResourceIT {
             .andExpect(jsonPath("$.id").value(crawler.getId().intValue()))
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME))
             .andExpect(jsonPath("$.fetchInterval").value(DEFAULT_FETCH_INTERVAL))
-            .andExpect(jsonPath("$.source").value(DEFAULT_SOURCE));
+            .andExpect(jsonPath("$.source").value(DEFAULT_SOURCE))
+            .andExpect(jsonPath("$.filters").exists());
     }
 
     @Test
@@ -278,6 +308,7 @@ class CrawlerResourceIT {
         assertThat(testCrawler.getName()).isEqualTo(UPDATED_NAME);
         assertThat(testCrawler.getFetchInterval()).isEqualTo(UPDATED_FETCH_INTERVAL);
         assertThat(testCrawler.getSource()).isEqualTo(UPDATED_SOURCE);
+        assertThat(testCrawler.getFilters()).hasSize(1);
     }
 
     @Test
@@ -363,8 +394,8 @@ class CrawlerResourceIT {
         // Update the crawler using partial update
         Crawler partialUpdatedCrawler = new Crawler();
         partialUpdatedCrawler.setId(crawler.getId());
-
         partialUpdatedCrawler.source(UPDATED_SOURCE);
+        partialUpdatedCrawler.addFilters(filters);
 
         restCrawlerMockMvc
             .perform(
@@ -382,6 +413,7 @@ class CrawlerResourceIT {
         assertThat(testCrawler.getName()).isEqualTo(DEFAULT_NAME);
         assertThat(testCrawler.getFetchInterval()).isEqualTo(DEFAULT_FETCH_INTERVAL);
         assertThat(testCrawler.getSource()).isEqualTo(UPDATED_SOURCE);
+        assertThat(testCrawler.getFilters()).hasSize(1);
     }
 
     @Test

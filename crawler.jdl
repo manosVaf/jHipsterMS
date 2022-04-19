@@ -24,8 +24,16 @@ entity Crawler (crawler) {
   source String required
 }
 
+entity Filters (filters) {
+  id Long
+  configuration String required
+}
 
-dto Crawler with mapstruct
+relationship OneToMany {
+    Crawler{filters} to Filters{crawler required}
+}
+
+dto * with mapstruct
 service Crawler with serviceImpl
 microservice Crawler with crawler
 paginate Crawler with pagination

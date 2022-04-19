@@ -56,7 +56,7 @@ public class CrawlerServiceImpl implements CrawlerService {
             .findById(crawlerDto.getId())
             .map(existingCrawler -> {
                 crawlerMapper.partialUpdate(existingCrawler, crawlerDto);
-
+                existingCrawler.getFilters().forEach(filters -> filters.setCrawler(existingCrawler));
                 return existingCrawler;
             })
             .map(crawlerRepository::save)

@@ -35,6 +35,13 @@
   "name": "Crawler",
   "pagination": "pagination",
   "readOnly": false,
-  "relationships": [],
+  "relationships": [
+    {
+      "otherEntityName": "filters",
+      "otherEntityRelationshipName": "crawler",
+      "relationshipName": "filters",
+      "relationshipType": "one-to-many"
+    }
+  ],
   "service": "serviceImpl"
 }
